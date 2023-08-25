@@ -1,3 +1,4 @@
+
 logs
 project/project
 project/target
@@ -7,6 +8,7 @@ tmp
 .history
 dist
 /.idea
+/.bsp
 /*.iml
 /*.ipr
 /out
@@ -20,3 +22,11 @@ node_modules/
 npm-debug.log
 yarn-debug.log
 yarn-error.log
+.DS_Store
+**/*.DS_Store
+/.metals
+/.vscode
+/.bloop
+/project/metals.sbt
+/project/.bloop
+    
