@@ -32,7 +32,6 @@ import uk.gov.hmrc.http.HttpResponse
 import uk.gov.hmrc.internalauth.client._
 import uk.gov.hmrc.internalauth.client.test.{BackendAuthComponentsStub, StubBehaviour}
 
-
 import scala.concurrent.Future
 
 class SubscriptionDisplayControllerSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEach {

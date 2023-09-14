@@ -36,8 +36,7 @@ class SubscriptionStatusControllerSpec extends BaseSpec with MockitoSugar with B
   implicit val cc                                    = stubControllerComponents()
   implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
 
-  private val mockConnector     = mock[SubscriptionStatusConnector]
-
+  private val mockConnector = mock[SubscriptionStatusConnector]
 
   private val mockStubBehaviour = mock[StubBehaviour]
 

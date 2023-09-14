@@ -32,12 +32,10 @@ trait WireMockRunner {
     WireMock.configureFor(Host, p)
   }
 
-  def resetMockServer(): Unit = {
+  def resetMockServer(): Unit =
     wireMockServer.resetAll()
-  }
 
-  def stopMockServer(): Unit = {
+  def stopMockServer(): Unit =
     wireMockServer.stop()
-  }
 
 }

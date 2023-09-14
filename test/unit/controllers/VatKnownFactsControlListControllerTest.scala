@@ -34,7 +34,6 @@ import uk.gov.hmrc.internalauth.client.test.{BackendAuthComponentsStub, StubBeha
 
 import scala.concurrent.Future
 
-
 class VatKnownFactsControlListControllerTest extends BaseSpec with MockitoSugar with BeforeAndAfterEach {
 
   implicit val cc                                    = stubControllerComponents()
