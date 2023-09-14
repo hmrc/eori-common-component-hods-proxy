@@ -32,7 +32,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import org.mockito.Mockito._
 import play.api.inject.bind
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.global
 
 trait IntegrationTestSpec

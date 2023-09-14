@@ -62,7 +62,8 @@ class ProxyConnectorGetSpec extends IntegrationTestSpec with SubscriptionStatusS
   }
 
   override protected def afterEach(): Unit = {
-    mreset(mockHeaderGenerator, mockServicesConfig)
+    mreset(mockHeaderGenerator)
+    mreset(mockServicesConfig)
 
     super.afterEach()
   }
