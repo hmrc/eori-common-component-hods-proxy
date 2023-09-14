@@ -18,7 +18,7 @@ package unit.controllers
 
 import base.BaseSpec
 import org.mockito.ArgumentMatchers
-import org.mockito.ArgumentMatchers.{eq => ameq, _}
+
 import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
 import org.scalatestplus.mockito.MockitoSugar
@@ -27,17 +27,15 @@ import play.api.libs.json.Json
 import play.api.mvc.AnyContentAsJson
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.auth.core._
-import uk.gov.hmrc.auth.core.retrieve.EmptyRetrieval
-import uk.gov.hmrc.customs.hodsproxy.connectors.{MicroserviceAuthConnector, ProxyConnector}
+
+import uk.gov.hmrc.customs.hodsproxy.connectors.ProxyConnector
 import uk.gov.hmrc.customs.hodsproxy.controllers.ProxyPutController
-import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
+import uk.gov.hmrc.http.HttpResponse
 import uk.gov.hmrc.internalauth.client._
 import uk.gov.hmrc.internalauth.client.test.{BackendAuthComponentsStub, StubBehaviour}
 
-import scala.concurrent.{ExecutionContext, Future}
-import scala.concurrent.ExecutionContext.global
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+
 
 class ProxyPutControllerSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEach {
 
@@ -62,7 +60,8 @@ class ProxyPutControllerSpec extends BaseSpec with MockitoSugar with BeforeAndAf
   }
 
   override protected def afterEach(): Unit = {
-    reset(mockConnector, mockStubBehaviour)
+    reset(mockConnector)
+    reset(mockStubBehaviour)
 
     super.afterEach()
   }

@@ -35,7 +35,7 @@ class VatKnownFactsControlListConnectorSpec extends IntegrationTestSpec with Moc
   SharedMetricRegistries.clear()
 
   override implicit lazy val app: Application = new GuiceApplicationBuilder().configure(
-    appConfig + (
+    appConfig ++ Seq(
       "microservice.services.vat-known-facts-control-list.host"         -> Host,
       "microservice.services.vat-known-facts-control-list.port"         -> p,
       "microservice.services.vat-known-facts-control-list.context"      -> "/vat/known-facts/control-list/1.0.0",

@@ -56,8 +56,8 @@ class UpdateVerifiedEmailConnectorSpec extends IntegrationTestSpec with UpdateVe
   }
 
   override protected def afterEach(): Unit = {
-    mreset(mockHeaderGenerator, mockServicesConfig)
-
+    mreset(mockHeaderGenerator)
+    mreset(mockServicesConfig)
     super.afterEach()
   }
 

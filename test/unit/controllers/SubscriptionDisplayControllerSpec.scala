@@ -17,7 +17,7 @@
 package unit.controllers
 
 import base.BaseSpec
-import org.mockito.ArgumentMatchers.{eq => ameq, _}
+
 import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
 import org.scalatestplus.mockito.MockitoSugar
@@ -25,17 +25,15 @@ import play.api.http.MimeTypes
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.auth.core.AuthProviders
-import uk.gov.hmrc.auth.core.retrieve.EmptyRetrieval
-import uk.gov.hmrc.customs.hodsproxy.connectors.{MicroserviceAuthConnector, SubscriptionDisplayConnector}
+
+import uk.gov.hmrc.customs.hodsproxy.connectors.SubscriptionDisplayConnector
 import uk.gov.hmrc.customs.hodsproxy.controllers.SubscriptionDisplayController
-import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
+import uk.gov.hmrc.http.HttpResponse
 import uk.gov.hmrc.internalauth.client._
 import uk.gov.hmrc.internalauth.client.test.{BackendAuthComponentsStub, StubBehaviour}
 
-import scala.concurrent.ExecutionContext.global
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{ExecutionContext, Future}
+
+import scala.concurrent.Future
 
 class SubscriptionDisplayControllerSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEach {
 
@@ -64,7 +62,8 @@ class SubscriptionDisplayControllerSpec extends BaseSpec with MockitoSugar with 
   }
 
   override protected def afterEach(): Unit = {
-    reset(mockConnector, mockStubBehaviour)
+    reset(mockConnector)
+    reset(mockStubBehaviour)
 
     super.afterEach()
   }
