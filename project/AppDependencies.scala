@@ -5,11 +5,11 @@ import sbt._
 
 object AppDependencies {
 
-  val bootstrapVersion = "7.19.0"
+  val bootstrapVersion = "7.22.0"
 
   val compile = Seq(
     "uk.gov.hmrc"              %% "bootstrap-backend-play-28"      % bootstrapVersion,
-    "uk.gov.hmrc"              %% "internal-auth-client-play-28"   % "1.3.0"
+    "uk.gov.hmrc"              %% "internal-auth-client-play-28"   % "1.6.0"
   )
 
   val test = Seq(
