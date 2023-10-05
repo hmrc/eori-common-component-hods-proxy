@@ -16,9 +16,9 @@
 
 package uk.gov.hmrc.customs.hodsproxy.connectors
 
+import play.api.Logger
 import play.api.http.Status
 import play.api.libs.json.JsValue
-import uk.gov.hmrc.customs.hodsproxy.Logger.logger
 import uk.gov.hmrc.customs.hodsproxy.metrics.CdsMetrics
 import uk.gov.hmrc.customs.hodsproxy.metrics.MetricsEnum._
 import uk.gov.hmrc.http._
@@ -36,6 +36,8 @@ abstract class ProxyConnector @Inject() (
   headerGenerator: HeaderGenerator
 )(implicit ec: ExecutionContext)
     extends RawResponseReads {
+
+  private val logger      = Logger(this.getClass)
 
   val serviceName: String
   val metricsId: MetricsEnum

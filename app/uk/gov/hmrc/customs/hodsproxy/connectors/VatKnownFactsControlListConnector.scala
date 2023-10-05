@@ -16,9 +16,10 @@
 
 package uk.gov.hmrc.customs.hodsproxy.connectors
 
+import play.api.Logger
+
 import javax.inject.{Inject, Singleton}
 import play.api.http.Status
-import uk.gov.hmrc.customs.hodsproxy.Logger.logger
 import uk.gov.hmrc.customs.hodsproxy.metrics.CdsMetrics
 import uk.gov.hmrc.customs.hodsproxy.metrics.MetricsEnum.{MetricsEnum, VAT_KNOWN_FACTS_CONTROL_LIST}
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
@@ -35,6 +36,8 @@ class VatKnownFactsControlListConnector @Inject() (
   headerGenerator: HeaderGenerator
 )(implicit ec: ExecutionContext)
     extends ProxyConnector(http, config, metrics, headerGenerator) {
+
+  private val logger      = Logger(this.getClass)
 
   def get(vrn: String): Future[HttpResponse] = {
 
