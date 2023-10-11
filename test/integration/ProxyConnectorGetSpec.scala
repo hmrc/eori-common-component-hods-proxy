@@ -24,13 +24,13 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.customs.hodsproxy.connectors.{HeaderGenerator, ProxyConnector}
 import uk.gov.hmrc.customs.hodsproxy.metrics.MetricsEnum.SUBSCRIPTION_STATUS
 import uk.gov.hmrc.customs.hodsproxy.metrics.{CdsMetrics, MetricsEnum}
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.http.HttpClient
-import util.ExternalServicesConfig._
-import util.SubscriptionStatusService
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import util.ExternalServices
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class ProxyConnectorGetSpec extends IntegrationTestSpec with SubscriptionStatusService with MockitoSugar {
+class ProxyConnectorGetSpec extends IntegrationTestSpec with ExternalServices with MockitoSugar {
 
   private val mockHeaderGenerator = mock[HeaderGenerator]
   private val mockServicesConfig  = mock[ServicesConfig]
@@ -57,7 +57,7 @@ class ProxyConnectorGetSpec extends IntegrationTestSpec with SubscriptionStatusS
       Seq("dummyHeader" -> serviceBearerToken)
     )
     when(mockServicesConfig.getString(endsWith("bearer-token"))).thenReturn(serviceBearerToken)
-    when(mockServicesConfig.baseUrl(anyString)).thenReturn(s"http://$Host:$p/")
+    when(mockServicesConfig.baseUrl(anyString)).thenReturn(s"http://$Host:$Port/")
     when(mockServicesConfig.getString(endsWith("context"))).thenReturn(SubscriptionStatusServiceContext)
   }
 

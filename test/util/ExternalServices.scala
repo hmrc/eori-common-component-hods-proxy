@@ -17,49 +17,60 @@
 package util
 
 import com.github.tomakehurst.wiremock.client.WireMock._
+import com.github.tomakehurst.wiremock.matching.UrlPattern
 import play.api.test.Helpers._
 import play.mvc.Http.HeaderNames.CONTENT_TYPE
 import play.mvc.Http.MimeTypes.JSON
 
-trait RegisterWithoutIdService {
+trait ExternalServices {
 
-  val RegWithoutIdServiceContext = "register-without-id"
+  val RegisterWithEoriAndIdServiceContext = "registrations/registerwitheoriandid/v1"
+  val RegisterWithEoriAndIdServiceUrl     = urlMatching("/" + RegisterWithEoriAndIdServiceContext)
+
+  val RegWithIdServiceContext = "registrations/registerwithid/1.0.0"
+  val RegWithIdServiceUrl     = urlMatching("/" + RegWithIdServiceContext)
+
+  val RegWithoutIdServiceContext = "registrations/registerwithoutid/v1"
   val RegWithoutIdServiceUrl     = urlMatching("/" + RegWithoutIdServiceContext)
 
-  def setRegWithoutIdToReturnTheResponse(response: String, status: Int): Unit =
-    stubFor(
-      post(RegWithoutIdServiceUrl)
-        .willReturn(
-          aResponse()
-            .withStatus(status)
-            .withBody(response)
-            .withHeader(CONTENT_TYPE, JSON)
-        )
-    )
-
-}
-
-trait UpdateVerifiedEmailService {
-
-  val UpdateVerifiedEmailContext = "update-verified-email"
+  val UpdateVerifiedEmailContext = "subscriptions/updateverifiedemail/v1"
   val UpdateVerifiedEmailUrl     = urlMatching("/" + UpdateVerifiedEmailContext)
 
-  def stubUpdateVerifiedEmailResponse(response: String, status: Int): Unit =
-    stubFor(
-      put(UpdateVerifiedEmailUrl)
-        .willReturn(
-          aResponse()
-            .withStatus(status)
-            .withBody(response)
-            .withHeader(CONTENT_TYPE, JSON)
-        )
-    )
-
-}
-
-trait AuthServiceStub {
-  val authServiceUrl     = "/auth/authorise"
+  val authServiceUrl     = "auth/authorise"
   val defaultBearerToken = "AUTHORISED_BEARER_TOKEN"
+
+  val SubscriptionStatusServiceContext = "subscriptions/subscriptionstatus/v1"
+
+  val SubscriptionDisplayContext = "subscriptions/subscriptiondisplay/v1"
+
+  val SubscribeServiceContext = "subscriptions/subscriptioncreate/v1"
+  val SubscribeServiceUrl     = urlMatching("/" + SubscribeServiceContext)
+
+  val VatKnownFactsContext = "vat/known-facts/control-list"
+
+  def setRegisterWithIdToReturnTheResponse(response: String, status: Int): Unit =
+    stubPostCall(RegWithIdServiceUrl, response, status)
+
+  def setRegisterWithEoriAndIdToReturnTheResponse(response: String, status: Int): Unit =
+    stubPostCall(RegisterWithEoriAndIdServiceUrl, response, status)
+
+  def setRegWithoutIdToReturnTheResponse(response: String, status: Int): Unit =
+    stubPostCall(RegWithoutIdServiceUrl, response, status)
+
+  def stubUpdateVerifiedEmailResponse(response: String, status: Int): Unit =
+    stubPutCall(UpdateVerifiedEmailUrl, response, status)
+
+  def setSubscriptionStatusToReturnTheResponse(queryParams: String, response: String, status: Int): Unit =
+    stubGetCall(queryParams, SubscriptionStatusServiceContext, response, status)
+
+  def setSubscriptionDisplayToReturnTheResponse(queryParams: String, response: String, status: Int): Unit =
+    stubGetCall(queryParams, SubscriptionDisplayContext, response, status)
+
+  def setSubscribeToReturnTheResponse(response: String, status: Int): Unit =
+    stubPostCall(SubscribeServiceUrl, response, status)
+
+  def setVatKnownFactsToReturnTheResponse(vrn: String, response: String, status: Int): Unit =
+    stubGetCall(s"/$vrn", VatKnownFactsContext, response, status)
 
   def stubBearerTokenAuth(bearerToken: String = defaultBearerToken): Unit =
     stubFor(
@@ -78,15 +89,9 @@ trait AuthServiceStub {
         .withHeader(AUTHORIZATION, equalTo(s"Bearer $bearerToken"))
     )
 
-}
-
-trait SubscriptionStatusService {
-
-  val SubscriptionStatusServiceContext = "subscriptionstatus"
-
-  def setSubscriptionStatusToReturnTheResponse(queryParams: String, response: String, status: Int): Unit =
+  private def stubPostCall(url: UrlPattern, response: String, status: Int): Unit =
     stubFor(
-      get(urlEqualTo("/" + SubscriptionStatusServiceContext + queryParams))
+      post(url)
         .willReturn(
           aResponse()
             .withStatus(status)
@@ -95,15 +100,9 @@ trait SubscriptionStatusService {
         )
     )
 
-}
-
-trait VatKnownFactsStub {
-
-  val VatKnownFactsContext = "vat/known-facts/control-list/1.0.0"
-
-  def setVatKnownFactsToReturnTheResponse(vrn: String, response: String, status: Int): Unit =
+  private def stubGetCall(queryParams: String, context: String, response: String, status: Int): Unit =
     stubFor(
-      get(urlEqualTo("/" + VatKnownFactsContext + "/" + vrn))
+      get(urlEqualTo("/" + context + queryParams))
         .willReturn(
           aResponse()
             .withStatus(status)
@@ -112,17 +111,15 @@ trait VatKnownFactsStub {
         )
     )
 
-}
+  private def stubPutCall(url: UrlPattern, response: String, status: Int): Unit =
+    stubFor(
+      put(url)
+        .willReturn(
+          aResponse()
+            .withStatus(status)
+            .withBody(response)
+            .withHeader(CONTENT_TYPE, JSON)
+        )
+    )
 
-object ExternalServicesConfig {
-  private val basePort = sys.env.getOrElse("WIREMOCK_SERVICE_LOCATOR_PORT", "11111").toInt
-  private var p        = basePort
-
-  def port: Int = {
-    val current = p
-    p = p + 1
-    current
-  }
-
-  val Host = "localhost"
 }

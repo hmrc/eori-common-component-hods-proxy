@@ -24,7 +24,6 @@ import org.scalatestplus.play.guice.GuiceOneAppPerTest
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.{Application, Configuration}
 
-// TODO Remove GuiceOneAppPerTest and use stub for the config in this test
 class MdgTokensConfigurationTest extends BaseSpec with GuiceOneAppPerTest with TableDrivenPropertyChecks {
 
   private val defaultBearerToken = "bearer_token_must_be_set_in_app-config-xxx"

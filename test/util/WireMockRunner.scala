@@ -19,17 +19,22 @@ package util
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration._
-import util.ExternalServicesConfig._
+
 
 trait WireMockRunner {
-  lazy val p = port
 
-  lazy val wireMockUrl    = s"http://$Host:$p"
-  lazy val wireMockServer = new WireMockServer(wireMockConfig().port(p))
+  lazy val wireMockServer: WireMockServer = {
+    val server = new WireMockServer(wireMockConfig().dynamicPort())
+    server.start()
+    server
+  }
+
+  lazy val Port: Int = wireMockServer.port()
+  lazy val Host: String = "localhost"
 
   def startMockServer(): Unit = {
     if (!wireMockServer.isRunning) wireMockServer.start()
-    WireMock.configureFor(Host, p)
+    WireMock.configureFor(Host, Port)
   }
 
   def resetMockServer(): Unit =

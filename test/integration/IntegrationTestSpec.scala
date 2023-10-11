@@ -23,7 +23,6 @@ import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
-import util.ExternalServicesConfig.Host
 import util.WireMockRunner
 import play.api.test.Helpers._
 import uk.gov.hmrc.internalauth.client._
@@ -41,13 +40,13 @@ trait IntegrationTestSpec
 
   SharedMetricRegistries.clear()
 
-  val appConfig: Map[String, Any] =
-    Map("microservice.services.auth.host" -> Host, "microservice.services.auth.port" -> p)
+  val appConfig: Map[String, String] =
+    Map("microservice.services.auth.host" -> Host, "microservice.services.auth.port" -> Port.toString)
 
-  implicit val cc       = stubControllerComponents()
+  implicit lazy val cc       = stubControllerComponents()
   val mockStubBehaviour = mock[StubBehaviour]
 
-  def expectedPredicate(location: String) = Predicate.Permission(
+  def expectedPredicate(location: String): Predicate.Permission = Predicate.Permission(
     Resource(ResourceType("eori-common-component-hods-proxy"), ResourceLocation(location)),
     IAAction("WRITE")
   )

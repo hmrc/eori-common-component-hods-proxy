@@ -17,14 +17,13 @@
 package integration
 
 import java.net.ConnectException
-
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.customs.hodsproxy.connectors._
 import uk.gov.hmrc.customs.hodsproxy.controllers._
-import util.AuthServiceStub
+import util.{ExternalServices}
 
-class ControllersSpec extends IntegrationTestSpec with AuthServiceStub {
+class ControllersSpec extends IntegrationTestSpec with ExternalServices {
 
   private def fakeRequest(method: String, uri: String) =
     FakeRequest(method, uri).withHeaders("Authorization" -> s"Bearer $defaultBearerToken")
