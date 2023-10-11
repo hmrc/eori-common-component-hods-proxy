@@ -16,12 +16,18 @@
 
 package integration
 
-import java.net.ConnectException
+import play.api.Application
+import play.api.inject.bind
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.customs.hodsproxy.connectors._
 import uk.gov.hmrc.customs.hodsproxy.controllers._
-import util.{ExternalServices}
+import uk.gov.hmrc.internalauth.client.BackendAuthComponents
+import uk.gov.hmrc.internalauth.client.test.BackendAuthComponentsStub
+import util.ExternalServices
+
+import scala.concurrent.ExecutionContext.global
 
 class ControllersSpec extends IntegrationTestSpec with ExternalServices {
 
@@ -31,76 +37,128 @@ class ControllersSpec extends IntegrationTestSpec with ExternalServices {
   override protected def beforeEach(): Unit =
     super.beforeEach()
 
+  override implicit lazy val app: Application = new GuiceApplicationBuilder()
+    .overrides(bind[BackendAuthComponents].toInstance(BackendAuthComponentsStub(mockStubBehaviour)(cc, global)))
+    .configure(
+      appConfig ++ Seq(
+        "microservice.services.vat-known-facts-control-list.port" -> Port,
+        "microservice.services.vat-known-facts-control-list.host" -> Host,
+        "microservice.services.register-with-eori-and-id.port"    -> Port,
+        "microservice.services.register-with-eori-and-id.host"    -> Host,
+        "microservice.services.register-with-id.port"             -> Port,
+        "microservice.services.register-with-id.host"             -> Host,
+        "microservice.services.register-without-id.port"          -> Port,
+        "microservice.services.register-without-id.host"          -> Host,
+        "microservice.services.subscription-service.port"         -> Port,
+        "microservice.services.subscription-service.host"         -> Host,
+        "microservice.services.subscription-status.port"          -> Port,
+        "microservice.services.subscription-status.host"          -> Host,
+        "microservice.services.subscription-display.port"         -> Port,
+        "microservice.services.subscription-display.host"         -> Host,
+        "microservice.services.update-verified-email.host"         -> Host,
+        "microservice.services.update-verified-email.port"         -> Port
+      )
+    ).build()
+
   "Controllers are configured correctly and securely in routes" must {
 
     "RegisterWithoutIdController is configured with correct url and correct connector" in {
+      setRegWithoutIdToReturnTheResponse("""{"response":123}""", OK)
 
       app.injector.instanceOf[RegisterWithoutIdController].connector shouldBe a[RegisterWithoutIdConnector]
 
-      val result = route(app, fakeRequest("POST", "/register-without-id")).get
+      val result = route(app, fakeRequest("POST", "/register-without-id").withBody("""{"sdfsdfd":123234342}""").withHeaders(
+        ("Content-Type", "application/json"))).get
 
-      status(result) should be(BAD_REQUEST)
+      status(result) should be(OK)
     }
 
     "RegisterWithIdController is configured with correct url and correct connector" in {
+      setRegisterWithIdToReturnTheResponse("""{"response" :true}""", OK)
 
       app.injector.instanceOf[RegisterWithIdController].connector shouldBe a[RegisterWithIdConnector]
 
-      val result = route(app, fakeRequest("POST", "/register-with-id")).get
+      val result = route(
+        app,
+        fakeRequest("POST", "/register-with-id").withBody("""{"request":true}""").withHeaders(
+          ("Content-Type", "application/json")
+        )
+      ).get
 
-      status(result) should be(BAD_REQUEST)
+      status(result) should be(OK)
     }
 
     "RegisterWithEoriAndIdController is configured with correct url and correct connector" in {
+      setRegisterWithEoriAndIdToReturnTheResponse("""{"response" :true}""", OK)
 
       app.injector.instanceOf[RegisterWithEoriAndIdController].connector shouldBe a[RegisterWithEoriAndIdConnector]
 
-      val result = route(app, fakeRequest("POST", "/register-with-eori-and-id")).get
+      val result = route(
+        app,
+        fakeRequest("POST", "/register-with-eori-and-id").withBody("""{"request":true}""").withHeaders(
+          ("Content-Type", "application/json")
+        )
+      ).get
 
-      status(result) should be(BAD_REQUEST)
+      status(result) should be(OK)
     }
 
     "SubscriptionController is configured with correct url and correct connector" in {
+      setSubscribeToReturnTheResponse("""{"response" :true}""", OK)
 
       app.injector.instanceOf[SubscriptionController].connector shouldBe a[SubscriptionConnector]
 
-      val result = route(app, fakeRequest("POST", "/subscribe")).get
+      val result = route(
+        app,
+        fakeRequest("POST", "/subscribe").withBody("""{"request":true}""").withHeaders(
+          ("Content-Type", "application/json")
+        )
+      ).get
 
-      status(result) should be(BAD_REQUEST)
+      status(result) should be(OK)
     }
 
-    // TODO Below tests has ignore flag. After changing this to in all tests failed
-    // As I checked there is no dependency on eori-common-component-hods-stubs (customs-hods-stubs)
-    "SubscriptionStatusController is configured with correct connector" ignore {
+    "SubscriptionStatusController is configured with correct connector" in {
+      setSubscriptionStatusToReturnTheResponse("", """ {"response" :true} """, OK)
 
       app.injector.instanceOf[SubscriptionStatusController].connector shouldBe a[SubscriptionStatusConnector]
 
-      intercept[ConnectException] {
-        await(route(app, fakeRequest("GET", "/subscription-status")).get)
-      }.getMessage contains "subscriptions/subscriptionstatus/1.0.0'"
-      //Be mindful that this test fails if customs-hods-stubs is running on your box.
-      //TODO We need to re-write this test to make it independent on customs-hods-stubs
+      val result = route(app, fakeRequest("GET", "/subscription-status")).get
+
+      status(result) should be(OK)
     }
 
-    "SubscriptionDisplayController is configured with correct connector" ignore {
+    "SubscriptionDisplayController is configured with correct connector" in {
+      setSubscriptionDisplayToReturnTheResponse("", """ {"response" :true} """, OK)
+
       app.injector.instanceOf[SubscriptionDisplayController].connector shouldBe a[SubscriptionDisplayConnector]
 
-      intercept[ConnectException] {
-        await(route(app, fakeRequest("GET", "/subscription-display")).get)
-      }.getMessage contains "subscriptions/subscriptiondisplay/1.0.0'"
+      val result = route(app, fakeRequest("GET", "/subscription-display")).get
+
+      status(result) should be(OK)
     }
 
-    "VatKnownFactsControlListController is configured with correct connector" ignore {
+    "VatKnownFactsControlListController is configured with correct connector" in {
+      setVatKnownFactsToReturnTheResponse("12345678", """ {"response" :true} """, OK)
 
       app.injector.instanceOf[VatKnownFactsControlListController].connector shouldBe a[
         VatKnownFactsControlListConnector
       ]
 
-      intercept[ConnectException] {
-        await(route(app, fakeRequest("GET", "/vat-known-facts-control-list?vrn=12345678")).get)
-      }.getMessage contains "subscriptions/subscriptionstatus/1.0.0'"
-      //Be mindful that this test fails if customs-hods-stubs is running on your box.
-      //TODO We need to re-write this test to make it independent on customs-hods-stubs
+      val result = route(app, fakeRequest("GET", "/vat-known-facts-control-list?vrn=12345678")).get
+
+      status(result) should be(OK)
+    }
+
+    "UpdateVerifiedEmailController is configured with correct url and correct connector" in {
+      stubUpdateVerifiedEmailResponse("""{"response":123}""", OK)
+
+      app.injector.instanceOf[UpdateVerifiedEmailController].connector shouldBe a[UpdateVerifiedEmailConnector]
+
+      val result = route(app, fakeRequest("PUT", "/update-verified-email").withBody("""{"request":123234342}""").withHeaders(
+        ("Content-Type", "application/json"))).get
+
+      status(result) should be(OK)
     }
   }
 }
