@@ -25,10 +25,9 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.customs.hodsproxy.connectors.VatKnownFactsControlListConnector
 import uk.gov.hmrc.customs.hodsproxy.metrics.CdsMetrics
 import uk.gov.hmrc.customs.hodsproxy.metrics.MetricsEnum.VAT_KNOWN_FACTS_CONTROL_LIST
-import util.ExternalServicesConfig._
-import util.VatKnownFactsStub
+import util.ExternalServicesStubs
 
-class VatKnownFactsControlListConnectorSpec extends IntegrationTestSpec with MockitoSugar with VatKnownFactsStub {
+class VatKnownFactsControlListConnectorSpec extends IntegrationTestSpec with MockitoSugar with ExternalServicesStubs {
 
   private val responseJson = """ {"response" :true} """
 
@@ -37,12 +36,11 @@ class VatKnownFactsControlListConnectorSpec extends IntegrationTestSpec with Moc
   override implicit lazy val app: Application = new GuiceApplicationBuilder().configure(
     appConfig ++ Seq(
       "microservice.services.vat-known-facts-control-list.host"         -> Host,
-      "microservice.services.vat-known-facts-control-list.port"         -> p,
-      "microservice.services.vat-known-facts-control-list.context"      -> "/vat/known-facts/control-list/1.0.0",
+      "microservice.services.vat-known-facts-control-list.port"         -> Port,
       "microservice.services.vat-known-facts-control-list.bearer-token" -> "dummy-token",
       "auditing.enabled"                                                -> false,
       "auditing.consumer.baseUri.host"                                  -> Host,
-      "auditing.consumer.baseUri.port"                                  -> p
+      "auditing.consumer.baseUri.port"                                  -> Port
     )
   ).build()
 

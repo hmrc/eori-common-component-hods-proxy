@@ -25,13 +25,13 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.customs.hodsproxy.connectors.{HeaderGenerator, UpdateVerifiedEmailConnector}
 import uk.gov.hmrc.customs.hodsproxy.metrics.CdsMetrics
 import uk.gov.hmrc.customs.hodsproxy.metrics.MetricsEnum.UPDATE_VERIFIED_EMAIL
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.http.HttpClient
-import util.ExternalServicesConfig._
-import util.UpdateVerifiedEmailService
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import util.ExternalServicesStubs
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class UpdateVerifiedEmailConnectorSpec extends IntegrationTestSpec with UpdateVerifiedEmailService with MockitoSugar {
+class UpdateVerifiedEmailConnectorSpec extends IntegrationTestSpec with ExternalServicesStubs with MockitoSugar {
 
   private val serviceBearerToken = "1234ABCD"
 
@@ -51,8 +51,8 @@ class UpdateVerifiedEmailConnectorSpec extends IntegrationTestSpec with UpdateVe
 
     when(mockHeaderGenerator.headersForMDG(serviceBearerToken)).thenReturn(Seq("testHeader" -> serviceBearerToken))
     when(mockServicesConfig.getString(endsWith("bearer-token"))).thenReturn(serviceBearerToken)
-    when(mockServicesConfig.baseUrl(anyString)).thenReturn(s"http://$Host:$p/")
-    when(mockServicesConfig.getString(endsWith("context"))).thenReturn("update-verified-email")
+    when(mockServicesConfig.baseUrl(anyString)).thenReturn(s"http://$Host:$Port/")
+    when(mockServicesConfig.getString(endsWith("context"))).thenReturn("subscriptions/updateverifiedemail/v1")
   }
 
   override protected def afterEach(): Unit = {

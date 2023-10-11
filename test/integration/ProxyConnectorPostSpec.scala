@@ -27,11 +27,11 @@ import uk.gov.hmrc.customs.hodsproxy.metrics.MetricsEnum.REGISTER_WITHOUT_ID
 import uk.gov.hmrc.customs.hodsproxy.metrics.{CdsMetrics, MetricsEnum}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.http.HttpClient
-import util.ExternalServicesConfig._
-import util.RegisterWithoutIdService
+import util.ExternalServicesStubs
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class ProxyConnectorPostSpec extends IntegrationTestSpec with RegisterWithoutIdService with MockitoSugar {
+class ProxyConnectorPostSpec extends IntegrationTestSpec with ExternalServicesStubs with MockitoSugar {
 
   private val serviceBearerToken = "1234ABCD"
 
@@ -54,7 +54,7 @@ class ProxyConnectorPostSpec extends IntegrationTestSpec with RegisterWithoutIdS
 
     when(mockHeaderGenerator.headersForMDG(serviceBearerToken)).thenReturn(Seq("testHeader" -> serviceBearerToken))
     when(mockServicesConfig.getString(endsWith("bearer-token"))).thenReturn(serviceBearerToken)
-    when(mockServicesConfig.baseUrl(anyString)).thenReturn(s"http://$Host:$p/")
+    when(mockServicesConfig.baseUrl(anyString)).thenReturn(s"http://$Host:$Port/")
     when(mockServicesConfig.getString(endsWith("context"))).thenReturn(RegWithoutIdServiceContext)
   }
 
