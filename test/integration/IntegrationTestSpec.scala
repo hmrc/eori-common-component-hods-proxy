@@ -43,7 +43,7 @@ trait IntegrationTestSpec
   val appConfig: Map[String, String] =
     Map("microservice.services.auth.host" -> Host, "microservice.services.auth.port" -> Port.toString)
 
-  implicit lazy val cc       = stubControllerComponents()
+  implicit lazy val cc  = stubControllerComponents()
   val mockStubBehaviour = mock[StubBehaviour]
 
   def expectedPredicate(location: String): Predicate.Permission = Predicate.Permission(

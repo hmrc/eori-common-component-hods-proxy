@@ -20,7 +20,6 @@ import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration._
 
-
 trait WireMockRunner {
 
   lazy val wireMockServer: WireMockServer = {
@@ -29,7 +28,7 @@ trait WireMockRunner {
     server
   }
 
-  lazy val Port: Int = wireMockServer.port()
+  lazy val Port: Int    = wireMockServer.port()
   lazy val Host: String = "localhost"
 
   def startMockServer(): Unit = {

@@ -55,8 +55,8 @@ class ControllersSpec extends IntegrationTestSpec with ExternalServicesStubs {
         "microservice.services.subscription-status.host"          -> Host,
         "microservice.services.subscription-display.port"         -> Port,
         "microservice.services.subscription-display.host"         -> Host,
-        "microservice.services.update-verified-email.host"         -> Host,
-        "microservice.services.update-verified-email.port"         -> Port
+        "microservice.services.update-verified-email.host"        -> Host,
+        "microservice.services.update-verified-email.port"        -> Port
       )
     ).build()
 
@@ -67,14 +67,18 @@ class ControllersSpec extends IntegrationTestSpec with ExternalServicesStubs {
 
       app.injector.instanceOf[RegisterWithoutIdController].connector shouldBe a[RegisterWithoutIdConnector]
 
-      val result = route(app, fakeRequest("POST", "/register-without-id").withBody("""{"sdfsdfd":123234342}""").withHeaders(
-        ("Content-Type", "application/json"))).get
+      val result = route(
+        app,
+        fakeRequest("POST", "/register-without-id").withBody("""{"response":123}""").withHeaders(
+          ("Content-Type", "application/json")
+        )
+      ).get
 
       status(result) should be(OK)
     }
 
     "RegisterWithIdController is configured with correct url and correct connector" in {
-      setRegisterWithIdToReturnTheResponse("""{"response" :true}""", OK)
+      setRegisterWithIdToReturnTheResponse("""{"response":true}""", OK)
 
       app.injector.instanceOf[RegisterWithIdController].connector shouldBe a[RegisterWithIdConnector]
 
@@ -119,7 +123,7 @@ class ControllersSpec extends IntegrationTestSpec with ExternalServicesStubs {
     }
 
     "SubscriptionStatusController is configured with correct connector" in {
-      setSubscriptionStatusToReturnTheResponse("", """ {"response" :true} """, OK)
+      setSubscriptionStatusToReturnTheResponse("", """ {"response":true} """, OK)
 
       app.injector.instanceOf[SubscriptionStatusController].connector shouldBe a[SubscriptionStatusConnector]
 
@@ -129,7 +133,7 @@ class ControllersSpec extends IntegrationTestSpec with ExternalServicesStubs {
     }
 
     "SubscriptionDisplayController is configured with correct connector" in {
-      setSubscriptionDisplayToReturnTheResponse("", """ {"response" :true} """, OK)
+      setSubscriptionDisplayToReturnTheResponse("", """ {"response":true} """, OK)
 
       app.injector.instanceOf[SubscriptionDisplayController].connector shouldBe a[SubscriptionDisplayConnector]
 
@@ -139,7 +143,7 @@ class ControllersSpec extends IntegrationTestSpec with ExternalServicesStubs {
     }
 
     "VatKnownFactsControlListController is configured with correct connector" in {
-      setVatKnownFactsToReturnTheResponse("12345678", """ {"response" :true} """, OK)
+      setVatKnownFactsToReturnTheResponse("12345678", """ {"response":true} """, OK)
 
       app.injector.instanceOf[VatKnownFactsControlListController].connector shouldBe a[
         VatKnownFactsControlListConnector
@@ -155,8 +159,12 @@ class ControllersSpec extends IntegrationTestSpec with ExternalServicesStubs {
 
       app.injector.instanceOf[UpdateVerifiedEmailController].connector shouldBe a[UpdateVerifiedEmailConnector]
 
-      val result = route(app, fakeRequest("PUT", "/update-verified-email").withBody("""{"request":123234342}""").withHeaders(
-        ("Content-Type", "application/json"))).get
+      val result = route(
+        app,
+        fakeRequest("PUT", "/update-verified-email").withBody("""{"request":123234342}""").withHeaders(
+          ("Content-Type", "application/json")
+        )
+      ).get
 
       status(result) should be(OK)
     }

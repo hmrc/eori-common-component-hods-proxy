@@ -31,7 +31,7 @@ import util.ExternalServicesStubs
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class UpdateVerifiedEmailConnectorSpec extends IntegrationTestSpec with  ExternalServicesStubs with MockitoSugar {
+class UpdateVerifiedEmailConnectorSpec extends IntegrationTestSpec with ExternalServicesStubs with MockitoSugar {
 
   private val serviceBearerToken = "1234ABCD"
 
