@@ -27,11 +27,11 @@ import uk.gov.hmrc.customs.hodsproxy.metrics.CdsMetrics
 import uk.gov.hmrc.customs.hodsproxy.metrics.MetricsEnum.UPDATE_VERIFIED_EMAIL
 import uk.gov.hmrc.http.HttpClient
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
-import util.ExternalServices
+import util.ExternalServicesStubs
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class UpdateVerifiedEmailConnectorSpec extends IntegrationTestSpec with  ExternalServices with MockitoSugar {
+class UpdateVerifiedEmailConnectorSpec extends IntegrationTestSpec with  ExternalServicesStubs with MockitoSugar {
 
   private val serviceBearerToken = "1234ABCD"
 

@@ -26,11 +26,11 @@ import uk.gov.hmrc.customs.hodsproxy.metrics.MetricsEnum.SUBSCRIPTION_STATUS
 import uk.gov.hmrc.customs.hodsproxy.metrics.{CdsMetrics, MetricsEnum}
 import uk.gov.hmrc.http.HttpClient
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
-import util.ExternalServices
+import util.ExternalServicesStubs
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class ProxyConnectorGetSpec extends IntegrationTestSpec with ExternalServices with MockitoSugar {
+class ProxyConnectorGetSpec extends IntegrationTestSpec with ExternalServicesStubs with MockitoSugar {
 
   private val mockHeaderGenerator = mock[HeaderGenerator]
   private val mockServicesConfig  = mock[ServicesConfig]

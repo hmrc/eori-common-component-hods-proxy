@@ -27,11 +27,11 @@ import uk.gov.hmrc.customs.hodsproxy.metrics.MetricsEnum.REGISTER_WITHOUT_ID
 import uk.gov.hmrc.customs.hodsproxy.metrics.{CdsMetrics, MetricsEnum}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.http.HttpClient
-import util.{ExternalServices}
+import util.ExternalServicesStubs
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class ProxyConnectorPostSpec extends IntegrationTestSpec with ExternalServices with MockitoSugar {
+class ProxyConnectorPostSpec extends IntegrationTestSpec with ExternalServicesStubs with MockitoSugar {
 
   private val serviceBearerToken = "1234ABCD"
 

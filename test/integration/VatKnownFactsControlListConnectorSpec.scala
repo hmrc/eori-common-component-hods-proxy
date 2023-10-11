@@ -25,9 +25,9 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.customs.hodsproxy.connectors.VatKnownFactsControlListConnector
 import uk.gov.hmrc.customs.hodsproxy.metrics.CdsMetrics
 import uk.gov.hmrc.customs.hodsproxy.metrics.MetricsEnum.VAT_KNOWN_FACTS_CONTROL_LIST
-import util.ExternalServices
+import util.ExternalServicesStubs
 
-class VatKnownFactsControlListConnectorSpec extends IntegrationTestSpec with MockitoSugar with ExternalServices {
+class VatKnownFactsControlListConnectorSpec extends IntegrationTestSpec with MockitoSugar with ExternalServicesStubs {
 
   private val responseJson = """ {"response" :true} """
 

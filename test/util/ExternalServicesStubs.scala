@@ -22,7 +22,7 @@ import play.api.test.Helpers._
 import play.mvc.Http.HeaderNames.CONTENT_TYPE
 import play.mvc.Http.MimeTypes.JSON
 
-trait ExternalServices {
+trait ExternalServicesStubs {
 
   val RegisterWithEoriAndIdServiceContext = "registrations/registerwitheoriandid/v1"
   val RegisterWithEoriAndIdServiceUrl     = urlMatching("/" + RegisterWithEoriAndIdServiceContext)

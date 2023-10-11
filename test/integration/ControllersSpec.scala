@@ -25,11 +25,11 @@ import uk.gov.hmrc.customs.hodsproxy.connectors._
 import uk.gov.hmrc.customs.hodsproxy.controllers._
 import uk.gov.hmrc.internalauth.client.BackendAuthComponents
 import uk.gov.hmrc.internalauth.client.test.BackendAuthComponentsStub
-import util.ExternalServices
+import util.ExternalServicesStubs
 
 import scala.concurrent.ExecutionContext.global
 
-class ControllersSpec extends IntegrationTestSpec with ExternalServices {
+class ControllersSpec extends IntegrationTestSpec with ExternalServicesStubs {
 
   private def fakeRequest(method: String, uri: String) =
     FakeRequest(method, uri).withHeaders("Authorization" -> s"Bearer $defaultBearerToken")
