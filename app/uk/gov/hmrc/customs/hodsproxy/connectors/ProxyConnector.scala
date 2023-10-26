@@ -37,7 +37,7 @@ abstract class ProxyConnector @Inject() (
 )(implicit ec: ExecutionContext)
     extends RawResponseReads {
 
-  private val logger      = Logger(this.getClass)
+  private val logger = Logger(this.getClass)
 
   val serviceName: String
   val metricsId: MetricsEnum

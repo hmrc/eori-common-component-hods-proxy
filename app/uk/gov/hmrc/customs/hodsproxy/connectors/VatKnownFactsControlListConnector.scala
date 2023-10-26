@@ -37,7 +37,7 @@ class VatKnownFactsControlListConnector @Inject() (
 )(implicit ec: ExecutionContext)
     extends ProxyConnector(http, config, metrics, headerGenerator) {
 
-  private val logger      = Logger(this.getClass)
+  private val logger = Logger(this.getClass)
 
   def get(vrn: String): Future[HttpResponse] = {
 
