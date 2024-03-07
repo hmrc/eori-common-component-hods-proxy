@@ -16,13 +16,13 @@
 
 package uk.gov.hmrc.customs.hodsproxy.connectors
 
+import play.api.http.HeaderNames._
+import play.api.http.MimeTypes
+
 import java.time.format.DateTimeFormatter
 import java.time.{Clock, ZoneId, ZonedDateTime}
 import java.util.UUID
-
 import javax.inject.Singleton
-import play.api.http.HeaderNames._
-import play.api.http.MimeTypes
 
 @Singleton
 class HeaderGenerator {

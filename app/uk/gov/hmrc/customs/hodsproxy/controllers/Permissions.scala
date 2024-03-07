@@ -20,7 +20,7 @@ import uk.gov.hmrc.internalauth.client._
 
 object Permissions {
 
-  def internalAuthPermission(location: String) = Predicate.Permission(
+  def internalAuthPermission(location: String): Predicate.Permission = Predicate.Permission(
     resource = Resource(
       resourceType = ResourceType("eori-common-component-hods-proxy"),
       resourceLocation = ResourceLocation(location)

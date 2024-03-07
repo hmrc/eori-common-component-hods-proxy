@@ -16,14 +16,14 @@
 
 package uk.gov.hmrc.customs.hodsproxy.controllers
 
-import javax.inject.{Inject, Singleton}
 import play.api.http.MimeTypes
 import play.api.mvc._
 import uk.gov.hmrc.customs.hodsproxy.connectors._
-import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-import uk.gov.hmrc.internalauth.client._
 import uk.gov.hmrc.customs.managesubscription.controllers.Permissions.internalAuthPermission
+import uk.gov.hmrc.internalauth.client._
+import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
 
 class ProxyGetController(val connector: ProxyConnector, val auth: BackendAuthComponents, cc: ControllerComponents)(
