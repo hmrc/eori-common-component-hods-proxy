@@ -1,6 +1,6 @@
 import sbt.Keys._
 import sbt._
-import uk.gov.hmrc.DefaultBuildSettings.{addTestReportOption, defaultSettings, targetJvm}
+import uk.gov.hmrc.DefaultBuildSettings.{addTestReportOption, defaultSettings}
 
 import scala.language.postfixOps
 name := "eori-common-component-hods-proxy"
