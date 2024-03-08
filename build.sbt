@@ -6,7 +6,6 @@ import scala.language.postfixOps
 name := "eori-common-component-hods-proxy"
 majorVersion := 0
 PlayKeys.devSettings := Seq("play.server.http.port" -> "6753")
-targetJvm := "jvm-11"
 scalaVersion := "2.13.12"
 lazy val CdsIntegrationTest = config("it") extend Test
 val testConfig = Seq(CdsIntegrationTest, Test)
