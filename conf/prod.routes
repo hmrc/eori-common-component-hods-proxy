@@ -1,21 +1,19 @@
-POST        /subscribe                            @uk.gov.hmrc.customs.hodsproxy.controllers.SubscriptionController.post
+POST        /subscribe                            @uk.gov.hmrc.customs.hodsproxy.controllers.SubscriptionController.post()
 
-POST        /register-with-id                     @uk.gov.hmrc.customs.hodsproxy.controllers.RegisterWithIdController.post
+POST        /register-with-id                     @uk.gov.hmrc.customs.hodsproxy.controllers.RegisterWithIdController.post()
 
-POST        /register-without-id                  @uk.gov.hmrc.customs.hodsproxy.controllers.RegisterWithoutIdController.post
+POST        /register-without-id                  @uk.gov.hmrc.customs.hodsproxy.controllers.RegisterWithoutIdController.post()
 
-POST        /register-with-eori-and-id            @uk.gov.hmrc.customs.hodsproxy.controllers.RegisterWithEoriAndIdController.post
+POST        /register-with-eori-and-id            @uk.gov.hmrc.customs.hodsproxy.controllers.RegisterWithEoriAndIdController.post()
 
-GET         /subscription-status                  @uk.gov.hmrc.customs.hodsproxy.controllers.SubscriptionStatusController.get
+GET         /subscription-status                  @uk.gov.hmrc.customs.hodsproxy.controllers.SubscriptionStatusController.get()
 
-GET         /subscription-display                 @uk.gov.hmrc.customs.hodsproxy.controllers.SubscriptionDisplayController.get
+GET         /subscription-display                 @uk.gov.hmrc.customs.hodsproxy.controllers.SubscriptionDisplayController.get()
 
-POST        /registration-display                 @uk.gov.hmrc.customs.hodsproxy.controllers.RegistrationDisplayController.post
+POST        /registration-display                 @uk.gov.hmrc.customs.hodsproxy.controllers.RegistrationDisplayController.post()
 
-PUT         /update-verified-email                @uk.gov.hmrc.customs.hodsproxy.controllers.UpdateVerifiedEmailController.put
+PUT         /update-verified-email                @uk.gov.hmrc.customs.hodsproxy.controllers.UpdateVerifiedEmailController.put()
 
-GET         /vat-known-facts-control-list         @uk.gov.hmrc.customs.hodsproxy.controllers.VatKnownFactsControlListController.get
+GET         /vat-known-facts-control-list         @uk.gov.hmrc.customs.hodsproxy.controllers.VatKnownFactsControlListController.get()
 
 ->          /                                     health.Routes
-
-GET         /admin/metrics                        @com.kenshoo.play.metrics.MetricsController.metrics
