@@ -6,7 +6,7 @@ resolvers += "Typesafe Releases" at "https://repo.typesafe.com/typesafe/releases
 
 resolvers += Resolver.jcenterRepo
 
-addSbtPlugin("uk.gov.hmrc" % "sbt-auto-build" % "3.14.0")
+addSbtPlugin("uk.gov.hmrc" % "sbt-auto-build" % "3.20.0")
 
 addSbtPlugin("uk.gov.hmrc" % "sbt-distributables" % "2.5.0")
 
