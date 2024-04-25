@@ -20,12 +20,9 @@ import base.BaseSpec
 import com.codahale.metrics.SharedMetricRegistries
 import org.scalatest.TestData
 import org.scalatest.prop.TableDrivenPropertyChecks
-import org.scalatestplus.mockito.MockitoSugar.mock
 import org.scalatestplus.play.guice.GuiceOneAppPerTest
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.{Application, Configuration}
-import uk.gov.hmrc.internalauth.client.test.StubBehaviour
-
 
 class MdgTokensConfigurationTest extends BaseSpec with GuiceOneAppPerTest with TableDrivenPropertyChecks {
 
@@ -34,8 +31,6 @@ class MdgTokensConfigurationTest extends BaseSpec with GuiceOneAppPerTest with T
   private val bearerTokenFromCommandLine = "Bearer token from command line"
 
   private val tokensOverrideFromCommandLine = Map("tokens.bearer-token" -> bearerTokenFromCommandLine)
-
-  private val mockAuthStubBehaviour             = mock[StubBehaviour]
 
   SharedMetricRegistries.clear()
 
@@ -61,12 +56,6 @@ class MdgTokensConfigurationTest extends BaseSpec with GuiceOneAppPerTest with T
 
   forAll(configuredServices) { serviceName =>
     s"Bearer token for $serviceName service" should {
-
-//      when(mockAuthStubBehaviour.stubAuth(any, any[Retrieval[Username ~ Set[Resource]]]))
-//        .thenReturn(Future.successful(Username("user1") ~ Set.empty)) // this requires the syntax import
-
-//      when(mockAuthStubBehaviour.stubAuth(None, Retrieval.EmptyRetrieval))
-//        .thenReturn(Future.unit)
 
       "be a default bearer token for default environment when there's no override" in {
         val bearerTokenForDefaultEnvironment =
