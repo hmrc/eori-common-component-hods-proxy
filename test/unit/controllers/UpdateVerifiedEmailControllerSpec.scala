@@ -36,11 +36,11 @@ import scala.concurrent.Future
 
 class UpdateVerifiedEmailControllerSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEach {
 
-  implicit val cc: ControllerComponents = stubControllerComponents()
+  implicit val cc: ControllerComponents              = stubControllerComponents()
   implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
 
   val mockConnector: UpdateVerifiedEmailConnector = mock[UpdateVerifiedEmailConnector]
-  private val mockStubBehaviour = mock[StubBehaviour]
+  private val mockStubBehaviour                   = mock[StubBehaviour]
 
   private val expectedPredicate = Predicate.Permission(
     Resource(ResourceType("eori-common-component-hods-proxy"), ResourceLocation("put")),
@@ -66,7 +66,7 @@ class UpdateVerifiedEmailControllerSpec extends BaseSpec with MockitoSugar with 
     super.afterEach()
   }
 
-  val requestJson: JsValue = Json.parse(""" { "request": "JSON" } """)
+  val requestJson: JsValue  = Json.parse(""" { "request": "JSON" } """)
   val responseJson: JsValue = Json.parse(""" { "response": "JSON" } """)
 
   private def fakeRequest() = FakeRequest().withJsonBody(requestJson).withHeaders("Authorization" -> "Token some-token")

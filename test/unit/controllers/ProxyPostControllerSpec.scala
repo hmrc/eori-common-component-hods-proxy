@@ -36,7 +36,7 @@ import scala.concurrent.Future
 
 class ProxyPostControllerSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEach {
 
-  implicit val cc: ControllerComponents = stubControllerComponents()
+  implicit val cc: ControllerComponents              = stubControllerComponents()
   implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
 
   private val mockConnector: ProxyConnector = mock[ProxyConnector]
@@ -63,7 +63,7 @@ class ProxyPostControllerSpec extends BaseSpec with MockitoSugar with BeforeAndA
     super.afterEach()
   }
 
-  val requestJson: JsValue = Json.parse(""" { "request": "JSON" } """)
+  val requestJson: JsValue  = Json.parse(""" { "request": "JSON" } """)
   val responseJson: JsValue = Json.parse(""" { "response": "JSON" } """)
 
   private def fakeRequest(): FakeRequest[AnyContentAsJson] =

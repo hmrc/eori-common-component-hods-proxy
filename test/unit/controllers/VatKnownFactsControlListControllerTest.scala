@@ -36,7 +36,7 @@ import scala.concurrent.Future
 
 class VatKnownFactsControlListControllerTest extends BaseSpec with MockitoSugar with BeforeAndAfterEach {
 
-  implicit val cc: ControllerComponents = stubControllerComponents()
+  implicit val cc: ControllerComponents              = stubControllerComponents()
   implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
 
   private val mockConnector     = mock[VatKnownFactsControlListConnector]
