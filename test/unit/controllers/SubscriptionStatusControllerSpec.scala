@@ -22,6 +22,7 @@ import org.scalatest.BeforeAndAfterEach
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.MimeTypes
 import play.api.libs.json.Json
+import play.api.mvc.ControllerComponents
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.customs.hodsproxy.connectors.SubscriptionStatusConnector
@@ -29,11 +30,12 @@ import uk.gov.hmrc.customs.hodsproxy.controllers.SubscriptionStatusController
 import uk.gov.hmrc.http.HttpResponse
 import uk.gov.hmrc.internalauth.client._
 import uk.gov.hmrc.internalauth.client.test.{BackendAuthComponentsStub, StubBehaviour}
+
 import scala.concurrent.Future
 
 class SubscriptionStatusControllerSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEach {
 
-  implicit val cc                                    = stubControllerComponents()
+  implicit val cc: ControllerComponents = stubControllerComponents()
   implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
 
   private val mockConnector = mock[SubscriptionStatusConnector]

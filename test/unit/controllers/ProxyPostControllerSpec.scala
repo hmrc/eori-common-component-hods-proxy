@@ -22,8 +22,8 @@ import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.MimeTypes
-import play.api.libs.json.Json
-import play.api.mvc.AnyContentAsJson
+import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.{AnyContentAsJson, ControllerComponents}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.customs.hodsproxy.connectors.ProxyConnector
@@ -36,7 +36,7 @@ import scala.concurrent.Future
 
 class ProxyPostControllerSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEach {
 
-  implicit val cc                                    = stubControllerComponents()
+  implicit val cc: ControllerComponents = stubControllerComponents()
   implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
 
   private val mockConnector: ProxyConnector = mock[ProxyConnector]
@@ -63,8 +63,8 @@ class ProxyPostControllerSpec extends BaseSpec with MockitoSugar with BeforeAndA
     super.afterEach()
   }
 
-  val requestJson  = Json.parse(""" { "request": "JSON" } """)
-  val responseJson = Json.parse(""" { "response": "JSON" } """)
+  val requestJson: JsValue = Json.parse(""" { "request": "JSON" } """)
+  val responseJson: JsValue = Json.parse(""" { "response": "JSON" } """)
 
   private def fakeRequest(): FakeRequest[AnyContentAsJson] =
     FakeRequest().withJsonBody(requestJson).withHeaders("Authorization" -> "Token some-token")
