@@ -35,7 +35,7 @@ import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.global
 
 trait IntegrationTestSpec
-    extends BaseSpec with ScalaFutures with BeforeAndAfterEach with BeforeAndAfterAll with GuiceOneAppPerSuite
+  extends BaseSpec with ScalaFutures with BeforeAndAfterEach with BeforeAndAfterAll with GuiceOneAppPerSuite
     with WireMockRunner with MockitoSugar {
 
   SharedMetricRegistries.clear()

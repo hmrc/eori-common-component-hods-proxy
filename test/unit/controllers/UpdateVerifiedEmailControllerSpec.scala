@@ -22,7 +22,8 @@ import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.MimeTypes
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.ControllerComponents
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.customs.hodsproxy.connectors.UpdateVerifiedEmailConnector
@@ -35,11 +36,11 @@ import scala.concurrent.Future
 
 class UpdateVerifiedEmailControllerSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEach {
 
-  implicit val cc                                    = stubControllerComponents()
+  implicit val cc: ControllerComponents              = stubControllerComponents()
   implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
 
-  val mockConnector             = mock[UpdateVerifiedEmailConnector]
-  private val mockStubBehaviour = mock[StubBehaviour]
+  val mockConnector: UpdateVerifiedEmailConnector = mock[UpdateVerifiedEmailConnector]
+  private val mockStubBehaviour                   = mock[StubBehaviour]
 
   private val expectedPredicate = Predicate.Permission(
     Resource(ResourceType("eori-common-component-hods-proxy"), ResourceLocation("put")),
@@ -65,8 +66,8 @@ class UpdateVerifiedEmailControllerSpec extends BaseSpec with MockitoSugar with 
     super.afterEach()
   }
 
-  val requestJson  = Json.parse(""" { "request": "JSON" } """)
-  val responseJson = Json.parse(""" { "response": "JSON" } """)
+  val requestJson: JsValue  = Json.parse(""" { "request": "JSON" } """)
+  val responseJson: JsValue = Json.parse(""" { "response": "JSON" } """)
 
   private def fakeRequest() = FakeRequest().withJsonBody(requestJson).withHeaders("Authorization" -> "Token some-token")
 

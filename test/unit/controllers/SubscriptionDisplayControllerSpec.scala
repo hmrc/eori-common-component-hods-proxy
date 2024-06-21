@@ -17,15 +17,14 @@
 package unit.controllers
 
 import base.BaseSpec
-
 import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.MimeTypes
 import play.api.libs.json.Json
+import play.api.mvc.ControllerComponents
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-
 import uk.gov.hmrc.customs.hodsproxy.connectors.SubscriptionDisplayConnector
 import uk.gov.hmrc.customs.hodsproxy.controllers.SubscriptionDisplayController
 import uk.gov.hmrc.http.HttpResponse
@@ -36,7 +35,7 @@ import scala.concurrent.Future
 
 class SubscriptionDisplayControllerSpec extends BaseSpec with MockitoSugar with BeforeAndAfterEach {
 
-  implicit val cc                                    = stubControllerComponents()
+  implicit val cc: ControllerComponents              = stubControllerComponents()
   implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
 
   private val mockConnector     = mock[SubscriptionDisplayConnector]

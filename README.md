@@ -2,6 +2,27 @@
 
 Proxy requests from the EORI Common Component Frontend (public zone) to backend services (protected zone)
 
+Other related ECC services:
+- Backend service: [EORI Common Component](https://github.com/hmrc/eori-common-component)
+- Stubs: [EORI Common Component Stubs](https://github.com/hmrc/eori-common-component-hods-stubs)
+- Registration service: [EORI Common Component Registration Frontend](https://github.com/hmrc/eori-common-component-registration-frontend)
+- Subscription service: [EORI Common Component Frontend](https://github.com/hmrc/eori-common-component-frontend)
+
+
+### Service Manager Commands
+
+What's running?
+
+    sm2 -s
+
+Start the required development services (make sure your service-manager-config folder is up to date)
+
+    sm2 --start EORI_COMMON_COMPONENT_ALL
+
+Stop all ECC related services
+
+    sm2 --stop EORI_COMMON_COMPONENT_ALL
+
 # Endpoints
 
 ## Subscribe
