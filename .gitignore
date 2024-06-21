@@ -29,4 +29,4 @@ yarn-error.log
 /.bloop
 /project/metals.sbt
 /project/.bloop
-    
+/.bsp/sbt.json
