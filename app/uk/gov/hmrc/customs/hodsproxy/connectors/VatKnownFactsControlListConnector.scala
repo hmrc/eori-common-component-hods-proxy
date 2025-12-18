@@ -43,9 +43,11 @@ class VatKnownFactsControlListConnector @Inject() (
 
     val url = s"${baseUrl(serviceName)}/$vrn"
 
-    implicit val hc = HeaderCarrier(extraHeaders = generateHeaders)
+    implicit val hc: HeaderCarrier = HeaderCarrier(extraHeaders = generateHeaders)
 
+    // $COVERAGE-OFF$
     logger.info(s"[$serviceName][Connector] GET url: $url")
+    // $COVERAGE-ON$
 
     makeDesRequest(http.get(URI.create(url).toURL).execute)
   }
@@ -55,19 +57,24 @@ class VatKnownFactsControlListConnector @Inject() (
     val timerContext = metrics.startTimer(metricsId)
     httpRequest map { response =>
       timerContext.stop()
-
+      // $COVERAGE-OFF$
       logger.info(s"[$serviceName][Connector] - status: ${response.status}")
+      // $COVERAGE-ON$
 
       response.status match {
         case Status.OK =>
           metrics.incrementSuccessCounter(metricsId)
           response
         case status if Status.isServerError(status) =>
+          // $COVERAGE-OFF$
           logger.error(s"[$serviceName][Connector] - status: ${response.status}")
+          // $COVERAGE-ON$
           metrics.incrementFailedCounter(metricsId)
           response
         case _ =>
+          // $COVERAGE-OFF$
           logger.warn(s"[$serviceName][Connector] - status: ${response.status}")
+          // $COVERAGE-ON$
           metrics.incrementFailedCounter(metricsId)
           response
       }
