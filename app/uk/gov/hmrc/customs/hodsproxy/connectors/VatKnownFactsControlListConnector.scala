@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.customs.hodsproxy.connectors
 
-import play.api.Logger
 import play.api.http.Status
 import uk.gov.hmrc.customs.hodsproxy.metrics.CdsMetrics
 import uk.gov.hmrc.customs.hodsproxy.metrics.MetricsEnum.{MetricsEnum, VAT_KNOWN_FACTS_CONTROL_LIST}
@@ -36,8 +35,6 @@ class VatKnownFactsControlListConnector @Inject() (
   headerGenerator: HeaderGenerator
 )(implicit ec: ExecutionContext)
     extends ProxyConnector(http, config, metrics, headerGenerator) {
-
-  private val logger = Logger(this.getClass)
 
   def get(vrn: String): Future[HttpResponse] = {
 
